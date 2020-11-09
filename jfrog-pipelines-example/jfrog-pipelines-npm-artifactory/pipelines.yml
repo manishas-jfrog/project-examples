@@ -13,6 +13,10 @@ resources:
         # Specifies which branches will trigger dependent steps
         include: master
 
+  - name: npm_buildinfo_jfp_example
+    type: BuildInfo
+
+
 
 pipelines:
   - name: npm_pipeline_jfp_example
@@ -26,3 +30,16 @@ pipelines:
             - name:  demoArt  # required
           inputResources:
             - name: npm_repo_jfp_example         # required
+
+      - name: npm_publish_step
+        type: NpmPublish
+        configuration:
+          # for payloadType npm:
+          repositoryName: npm-virtual        # required, npm repository name on artifactory
+          autoPublishBuildInfo: true       # optional
+          integrations:
+            - name: demoArt      # required
+          inputSteps:
+            - name: npm_build_step                # required
+          outputResources:
+            - name: npm_buildinfo_jfp_example                 # optional
