@@ -20,6 +20,8 @@ resources:
 
 pipelines:
   - name: npm_pipeline_jfp_example
+    configuration:
+      nodePool: static1
     steps:
       - name: npm_build_step
         type: NpmBuild
