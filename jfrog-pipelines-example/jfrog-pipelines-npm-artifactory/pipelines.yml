@@ -25,7 +25,7 @@ pipelines:
         type: NpmBuild
         configuration:
           repositoryName: npm-virtual      # required, npm repository name on artifacctory
-          sourceLocation: .      # required, location of package.json file
+          sourceLocation: ./jfrog-pipelines-example/jfrog-pipelines-npm-artifactory      # required, location of package.json file
           integrations:
             - name:  demoArt  # required
           inputResources:
