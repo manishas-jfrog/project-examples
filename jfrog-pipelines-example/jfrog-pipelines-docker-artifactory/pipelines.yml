@@ -1,0 +1,50 @@
+template: true   # required for local templates
+valuesFilePath: ./values.yml
+
+resources:
+  - name: docker_repo_jfp_example
+    type: GitRepo
+    configuration:
+      # SCM integration where the repository is located
+      gitProvider: {{ .Values.myRepo.gitProvider }}
+      # Repository path, including org name/repo name
+      path: {{ .Values.myRepo.path }}
+      branches:
+        # Specifies which branches will trigger dependent steps
+        include: master
+
+  - name: docker_buildinfo_jfp_example
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: demoArt
+
+pipelines:
+  - name: docker_pipeline_jfp_example
+    steps:
+      - name: docker_build_step
+        type: DockerBuild
+        configuration:
+          #inherits from bash
+          affinityGroup: my_docker_affinity_group
+          dockerFileLocation: ./jfrog-pipelines-example/jfrog-pipelines-docker-artifactory
+          dockerFileName: Dockerfile
+          dockerImageName: docker_pipeline_jfp_example
+          dockerImageTag: ${run_number}
+          integrations:
+            - name: demoArt  # required
+          inputResource:
+            - name: docker_repo_jfp_example
+
+      - name: docker_push_step
+        type: DockerPush
+        configuration:
+          #inherits from bash
+          affinityGroup: my_docker_affinity_group
+          targetRepository: docker-local        # required
+          autoPublishBuildInfo: true       # default false
+          integrations:
+            - name: demoArt  # required
+          inputSteps:
+            - name: docker_build_step         # required
+          outputResources:
+            - name: docker_buildinfo_jfp_example
