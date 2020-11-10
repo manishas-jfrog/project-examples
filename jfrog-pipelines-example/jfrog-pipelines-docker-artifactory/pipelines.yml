@@ -28,7 +28,7 @@ pipelines:
           affinityGroup: my_docker_affinity_group
           dockerFileLocation: ./jfrog-pipelines-example/jfrog-pipelines-docker-artifactory
           dockerFileName: Dockerfile
-          dockerImageName: docker_pipeline_jfp_example
+          dockerImageName: pipelines.westus.cloudapp.azure.com:8082/docker-local/docker_pipeline_jfp_example
           dockerImageTag: ${run_number}
           integrations:
             - name: demoArt  # required
