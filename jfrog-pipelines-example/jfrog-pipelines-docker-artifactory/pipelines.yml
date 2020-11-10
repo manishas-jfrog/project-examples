@@ -32,7 +32,7 @@ pipelines:
           dockerImageTag: ${run_number}
           integrations:
             - name: demoArt  # required
-          inputResource:
+          inputResources:
             - name: docker_repo_jfp_example
 
       - name: docker_push_step
