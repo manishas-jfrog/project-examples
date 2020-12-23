@@ -1,4 +1,4 @@
-# Example projects to integrate Artifactory with Circle CI
+# Example projects to integrate Artifactory with JFrog Pipelines
 
 ## Projects for different package types:
 
